@@ -12,5 +12,5 @@ export class DatabaseConnectionError extends Error {
         return [{
             message:this.reason
         }]
-    }
+    };
 }

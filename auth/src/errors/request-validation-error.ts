@@ -13,6 +13,6 @@ export class RequestValidationError extends Error{
     serializeErrors(){
         return this.errors.map((error)=>{
             return {message:error.msg, field:error.param};
-        })
-    }
+        });
+    };
 }
