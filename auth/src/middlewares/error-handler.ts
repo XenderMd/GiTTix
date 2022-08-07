@@ -4,20 +4,25 @@ import { RequestValidationError } from "../errors/request-validation-error";
 import { DatabaseConnectionError } from "../errors/database-connection-error";
 
 export const errorHandler = (
-  err: Error,
+  error: Error,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-    if(err instanceof RequestValidationError){
-      console.log("Handling this error as a request validation error");
+    if(error instanceof RequestValidationError){
+      const formattedErrors = error.errors.map((error)=>{
+        return {message:error.msg, field:error.param}
+      });
+      return res.status(400).send({errors:formattedErrors});
     };
 
-    if(err instanceof DatabaseConnectionError){
-      console.log("Handling this error as a db connection error");
+    if(error instanceof DatabaseConnectionError){
+
+      return res.status(500).send({errors:[{message:error.reason}]});
+
     }
     
     res.status(400).send({
-        message:err.message
+        errors:[{message:'Something went wrong'}]
     });
 };
