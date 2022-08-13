@@ -41,7 +41,7 @@
 
 // export {User};
 
-//////////// Officil Mongoose documentation implementation /////////////
+//////////// Official Mongoose documentation implementation /////////////
 
 import { Schema, model, connect } from 'mongoose';
 
