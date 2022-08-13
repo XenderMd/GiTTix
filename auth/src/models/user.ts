@@ -44,6 +44,7 @@
 //////////// Official Mongoose documentation implementation /////////////
 
 import { Schema, model, connect } from 'mongoose';
+import {Password} from '../services/password';
 
 // 1. Create an interface representing a document in MongoDB.
 interface IUserDocument {
@@ -56,6 +57,14 @@ const userSchema = new Schema<IUserDocument>({
   email: { type: String, required: true },
   password: { type: String, required: true }
 });
+
+userSchema.pre('save', async function(done){
+  if(this.isModified('password')){
+    const hashed = await Password.toHash(this.get('password'));
+    this.set('password', hashed);
+  }
+  done();
+})
 
 // 3. Create a Model.
 const UserModel = model<IUserDocument>('User', userSchema);
