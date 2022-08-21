@@ -1,6 +1,5 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
-import { app } from "../app";
 
 let mongo: any;
 
@@ -20,7 +19,7 @@ beforeEach(async () => {
 
 afterAll(async () => {
   if (mongo) {
+    await mongoose.connection.close()
     await mongo.stop();
   }
-  await mongoose.connection.close();
 });
