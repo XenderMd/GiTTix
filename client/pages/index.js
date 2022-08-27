@@ -1,26 +1,14 @@
-import axios from 'axios';
+import axiosClient from "../api/build-client";
  
 const indexPage = ({ currentUser }) => {
     console.log(currentUser);
     return <h1>Hello, {currentUser?.email ?? 'user'}</h1>;
 };
  
-export const getServerSideProps = async ({ req }) => {
-    let res;
-    if (typeof window === 'undefined') {
-        //we are on the server
-        res = await axios.get(
-            'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentUser',
-            {
-                withCredentials: true,
-                headers: req.headers
-            }
-        );
-    } else {
-        //we are in the browser
-        res = await axios.get('/api/users/current');
-    }
-    return { props: res.data };
+export const getServerSideProps = async (context) => {
+    const client = axiosClient(context)
+    const {data} = await client.get('/api/users/currentUser');
+    return { props: data };
 };
 
 export default indexPage;
