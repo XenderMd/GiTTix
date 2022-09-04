@@ -5,7 +5,6 @@ const indexPage = ({ currentUser }) => {
 };
  
 export const getServerSideProps = async (context) => {
-    console.log('Landing page!!!');
     const client = axiosClient(context)
     const {data} = await client.get('/api/users/currentUser');
     return { props: data };

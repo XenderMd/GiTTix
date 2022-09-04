@@ -2,11 +2,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 import App from 'next/app';
 
 import axiosClient from "../api/build-client";
+import Header from '../components/header';
 
 const AppComponent = ({Component, pageProps, currentUser})=>{
-    console.log(currentUser);
+    // console.log(currentUser);
     return  <div>
-                <h1>Header</h1>
+                <Header currentUser={currentUser}/>
                 <Component {...pageProps}/>
             </div>
 }
