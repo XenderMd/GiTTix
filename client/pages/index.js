@@ -1,8 +1,7 @@
 import axiosClient from "../api/build-client";
  
 const indexPage = ({ currentUser }) => {
-    console.log(currentUser);
-    return <h1>Hello, {currentUser?.email ?? 'user'}</h1>;
+ return currentUser ? <h1>You are signed in</h1> : <h1>You are not signed in</h1>
 };
  
 export const getServerSideProps = async (context) => {
