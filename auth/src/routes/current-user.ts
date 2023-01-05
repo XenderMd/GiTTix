@@ -1,11 +1,11 @@
 import express from 'express';
 
-import { currentUser } from '../middlewares/currentUser';
+import { currentUser } from '@dstavila-gittix/common';
 
 const router = express.Router();
 
-router.get('/api/users/currentUser', currentUser, (req, res)=>{
-    res.send({currentUser:req.currentUser||null});
+router.get('/api/users/currentUser', currentUser, (req, res) => {
+  res.send({ currentUser: req.currentUser || null });
 });
 
-export {router as currentUserRouter}
+export { router as currentUserRouter };
