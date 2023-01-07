@@ -3,6 +3,7 @@ import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 
 import { createTicketRouter } from './routes/createTicket';
+import { getTicketRouter } from './routes/getTicket';
 import {
   asyncHandler,
   errorHandler,
@@ -22,6 +23,7 @@ app.use(
 
 app.use(currentUser);
 app.use(createTicketRouter);
+app.use(getTicketRouter);
 
 app.all(
   '*',
