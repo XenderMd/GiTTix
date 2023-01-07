@@ -43,8 +43,8 @@
 
 //////////// Official Mongoose documentation implementation /////////////
 
-import { Schema, model, connect } from 'mongoose';
-import {Password} from '../services/password';
+import { Schema, model } from 'mongoose';
+import { Password } from '../services/password';
 
 // 1. Create an interface representing a document in MongoDB.
 interface IUserDocument {
@@ -55,31 +55,31 @@ interface IUserDocument {
 // 2. Create a Schema corresponding to the document interface.
 const userSchema = new Schema<IUserDocument>({
   email: { type: String, required: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
 });
 
-userSchema.set('toJSON',{
-  transform(doc:any, ret:any){
+userSchema.set('toJSON', {
+  transform(doc: any, ret: any) {
     delete ret.password;
-    ret.id=ret._id;
+    ret.id = ret._id;
     delete ret._id;
   },
-  versionKey:false
-})
+  versionKey: false,
+});
 
-userSchema.pre('save', async function(done){
-  if(this.isModified('password')){
+userSchema.pre('save', async function (done) {
+  if (this.isModified('password')) {
     const hashed = await Password.toHash(this.get('password'));
     this.set('password', hashed);
   }
   done();
-})
+});
 
 // 3. Create a Model.
 const UserModel = model<IUserDocument>('User', userSchema);
 
 export class User extends UserModel {
-    constructor(params: IUserDocument) {
-      super(params)
-    }
+  constructor(params: IUserDocument) {
+    super(params);
+  }
 }
