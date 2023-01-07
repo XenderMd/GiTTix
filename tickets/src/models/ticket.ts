@@ -3,13 +3,15 @@ import { Schema, model } from 'mongoose';
 // 1. Create an interface representing a document in MongoDB.
 interface ITicketDocument {
   title: string;
-  price: string;
+  userId: string;
+  price: number;
 }
 
 // 2. Create a Schema corresponding to the document interface.
 const ticketSchema = new Schema<ITicketDocument>({
   title: { type: String, required: true },
-  price: { type: String, required: true },
+  userId: { type: String, required: true },
+  price: { type: Number, required: true },
 });
 
 ticketSchema.set('toJSON', {
