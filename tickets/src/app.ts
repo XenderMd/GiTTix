@@ -2,10 +2,12 @@ import express from 'express';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 
+import { createTicketRouter } from './routes/createTicket';
 import {
   asyncHandler,
   errorHandler,
   NotFoundError,
+  currentUser,
 } from '@dstavila-gittix/common';
 
 const app = express();
@@ -17,6 +19,9 @@ app.use(
     secure: process.env.NODE_ENV !== 'test',
   })
 );
+
+app.use(currentUser);
+app.use(createTicketRouter);
 
 app.all(
   '*',
