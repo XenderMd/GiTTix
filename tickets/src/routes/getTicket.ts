@@ -1,15 +1,23 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { NotFoundError } from '@dstavila-gittix/common';
 import { Ticket } from '../models/ticket';
 
 const router = express.Router();
 
-router.get('/api/tickets/:id', async (req: Request, res: Response) => {
-  const ticket = await Ticket.findById(req.params.id);
-  if (!ticket) {
-    throw new NotFoundError();
+router.get(
+  '/api/tickets/:id',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const ticket = await Ticket.findById(req.params.id);
+
+      if (!ticket) {
+        throw new NotFoundError();
+      }
+      res.send(ticket);
+    } catch (error) {
+      next(error);
+    }
   }
-  res.send(ticket);
-});
+);
 
 export { router as getTicketRouter };
