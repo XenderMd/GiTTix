@@ -5,6 +5,7 @@ import cookieSession from 'cookie-session';
 import { createTicketRouter } from './routes/createTicket';
 import { getTicketRouter } from './routes/getTicket';
 import { getAllTicketsRouter } from './routes/getAllTickets';
+import { updateTicketRouter } from './routes/udpateTicket';
 import {
   asyncHandler,
   errorHandler,
@@ -26,6 +27,7 @@ app.use(currentUser);
 app.use(createTicketRouter);
 app.use(getTicketRouter);
 app.use(getAllTicketsRouter);
+app.use(updateTicketRouter);
 
 app.all(
   '*',
