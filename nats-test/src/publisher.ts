@@ -12,7 +12,7 @@ stan.on('connect', () => {
   const data = JSON.stringify({
     id: '123',
     title: 'concert',
-    price: 20,
+    price: 23,
   });
   stan.publish('ticket:created', data, () => {
     console.log('Event published');
