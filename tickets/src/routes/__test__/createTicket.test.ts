@@ -1,5 +1,3 @@
-import { response } from 'express';
-import { body } from 'express-validator';
 import request from 'supertest';
 import { app } from '../../app';
 import { Ticket } from '../../models/ticket';
