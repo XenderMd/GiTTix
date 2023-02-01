@@ -23,7 +23,7 @@ ticketSchema.set('toJSON', {
 });
 
 // 3. Create a Model.
-const TicketModel = model<ITicketDocument>('User', ticketSchema);
+const TicketModel = model<ITicketDocument>('Ticket', ticketSchema);
 
 export class Ticket extends TicketModel {
   constructor(params: ITicketDocument) {
