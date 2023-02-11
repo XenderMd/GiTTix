@@ -24,10 +24,12 @@ app.use(
   })
 );
 
+app.use(currentUser);
+app.use(createOrderRouter);
 app.use(getOrderRouter);
 app.use(getOrdersRouter);
 app.use(deleteOrderRouter);
-app.use(currentUser);
+
 app.all(
   '*',
   asyncHandler(() => {
