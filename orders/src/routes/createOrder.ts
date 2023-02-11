@@ -14,6 +14,8 @@ import { Order } from '../models/order';
 
 const router = express.Router();
 
+const EXPIRATION_WINDOW_SECONDS = 15 * 60;
+
 router.post(
   '/api/orders',
   requireAuth,
@@ -47,13 +49,27 @@ router.post(
     }
 
     // Calculate an expiration date for this order
+    const expiration = new Date();
+    expiration.setSeconds(expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS);
 
     // Build the order and save it to the database
+    const order = new Order({
+      userId: req.currentUser!.id,
+      status: OrderStatus.Created,
+      expiresAt: expiration,
+      ticket: ticket,
+    });
+
+    await order.save();
 
     // Publish an event saying that an order was created
 
-    res.send({});
+    res.status(201).send(order);
   }
 );
+
+// declare global {
+//   var signin: () => string[];
+// }
 
 export { router as createOrderRouter };
