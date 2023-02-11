@@ -43,7 +43,7 @@ router.post(
       // the ticket we just found *and* the order's status is *not* cancelled.
       // If we find an order, that menas that the ticket *is* reserved
 
-      const isReserved = await ticket.isReserved();
+      const isReserved = await ticket.isReserved!();
 
       if (isReserved) {
         throw new BadRequestError('Ticket is not available');

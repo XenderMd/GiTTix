@@ -6,7 +6,7 @@ import { Order, OrderStatus } from './order';
 export interface ITicketDocument {
   title: string;
   price: number;
-  isReserved(): Promise<boolean>;
+  isReserved?(): Promise<boolean>;
 }
 
 // 2. Create a Schema corresponding to the document interface.
