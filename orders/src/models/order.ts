@@ -1,4 +1,5 @@
 import mongoose, { Schema, model, mongo } from 'mongoose';
+import { ITicketDocument } from './ticket';
 import { OrderStatus } from '@dstavila-gittix/common';
 
 // 1. Create an interface representing a document in MongoDB.
@@ -6,7 +7,7 @@ interface IOrderDocument {
   userId: string;
   status: OrderStatus;
   expiresAt: Date;
-  ticket: TicketDoc;
+  ticket: ITicketDocument;
 }
 
 // 2. Create a Schema corresponding to the document interface.
