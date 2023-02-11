@@ -3,7 +3,9 @@ import mongoose from 'mongoose';
 import { body } from 'express-validator';
 
 import {
+  BadRequestError,
   NotFoundError,
+  OrderStatus,
   requireAuth,
   validateRequest,
 } from '@dstavila-gittix/common';
@@ -34,6 +36,23 @@ router.post(
     }
 
     // Make sure that this ticket is not already reserved
+    // Run query to look at all the orders. Find an order where the ticket is
+    // the ticket we just found *and* the order's status is *not* cancelled.
+    // If we find an order, that menas that the ticket *is* reserved
+    const existingOrder = await Order.findOne({
+      ticket: ticket,
+      status: {
+        $in: [
+          OrderStatus.Created,
+          OrderStatus.AwaitingPayment,
+          OrderStatus.Complete,
+        ],
+      },
+    });
+
+    if (existingOrder) {
+      throw new BadRequestError('Ticket is not available');
+    }
 
     // Calculate an expiration date for this order
 
