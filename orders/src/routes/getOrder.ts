@@ -13,7 +13,7 @@ const router = express.Router();
 router.get(
   '/api/orders/:orderId',
   requireAuth,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (mongoose.Types.ObjectId.isValid(req.params.orderId)) {
         const order = await Order.findById(req.params.orderId).populate(
@@ -29,7 +29,9 @@ router.get(
       } else {
         throw new BadRequestError('Invalid order ID');
       }
-    } catch (error) {}
+    } catch (error) {
+      next(error);
+    }
   }
 );
 
