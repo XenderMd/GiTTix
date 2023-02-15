@@ -32,4 +32,12 @@ it('returns an error if the ticket is already reserved', async () => {
     .send({ ticketId: ticket.id })
     .expect(400);
 });
-it('reserves a ticket', () => {});
+it('reserves a ticket', async () => {
+  const ticket = new Ticket({ title: 'concert', price: 20 });
+  await ticket.save();
+  await request(app)
+    .post('/api/orders')
+    .set('Cookie', global.signin())
+    .send({ ticketId: ticket.id })
+    .expect(201);
+});
