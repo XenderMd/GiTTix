@@ -14,7 +14,7 @@ router.delete(
   requireAuth,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { orderId } = req.params;
+      const orderId = req.params.orderId;
       const order = await Order.findById(orderId);
       if (!order) {
         throw new NotFoundError();
@@ -24,7 +24,10 @@ router.delete(
       }
       order.status = OrderStatus.Cancelled;
       order.save();
-      res.send(order);
+
+      // publish an event saying the order was cancelled
+
+      res.status(204).send(order);
     } catch (error) {
       next(error);
     }
