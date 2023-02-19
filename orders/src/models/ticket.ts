@@ -4,6 +4,7 @@ import { Order, OrderStatus } from './order';
 
 // 1. Create an interface representing a document in MongoDB.
 export interface ITicketDocument {
+  _id: string;
   title: string;
   price: number;
   isReserved?(): Promise<boolean>;
@@ -11,6 +12,7 @@ export interface ITicketDocument {
 
 // 2. Create a Schema corresponding to the document interface.
 const ticketSchema = new Schema<ITicketDocument>({
+  _id: { type: String, required: true },
   title: { type: String, required: true },
   price: { type: Number, required: true, min: 0 },
 });
