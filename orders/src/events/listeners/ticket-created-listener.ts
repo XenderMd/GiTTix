@@ -13,8 +13,6 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
   async onMessage(data: TicketCreatedEvent['data'], msg: Message) {
     const { id, title, price } = data;
     const ticket = new Ticket({ title, price, _id: id });
-    //Only for testing purposes
-    console.log(ticket._id);
     await ticket.save();
     msg.ack();
   }
