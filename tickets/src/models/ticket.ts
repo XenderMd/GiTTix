@@ -6,6 +6,7 @@ interface ITicketDocument {
   title: string;
   userId: string;
   price: number;
+  version?: number;
 }
 
 // 2. Create a Schema corresponding to the document interface.
@@ -14,6 +15,9 @@ const ticketSchema = new Schema<ITicketDocument>({
   userId: { type: String, required: true },
   price: { type: Number, required: true },
 });
+
+ticketSchema.set('versionKey', 'version');
+ticketSchema.plugin(updateIfCurrentPlugin);
 
 ticketSchema.set('toJSON', {
   transform(doc: any, ret: any) {
