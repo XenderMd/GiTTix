@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 // 1. Create an interface representing a document in MongoDB.
 interface ITicketDocument {

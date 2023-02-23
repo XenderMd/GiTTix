@@ -1,5 +1,4 @@
-import mongoose, { Schema, model, mongo } from 'mongoose';
-
+import { Schema, model } from 'mongoose';
 import { Order, OrderStatus } from './order';
 
 // 1. Create an interface representing a document in MongoDB.
