@@ -28,7 +28,10 @@ router.delete(
       order.save();
 
       // publish an event saying the order was cancelled
-      new OrderCancelledPublisher(natsWrapper.client).publish({ id: order.id });
+      new OrderCancelledPublisher(natsWrapper.client).publish({
+        id: order.id,
+        version: order.version!,
+      });
 
       res.status(204).send(order);
     } catch (error) {

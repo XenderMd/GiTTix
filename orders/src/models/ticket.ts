@@ -1,9 +1,11 @@
 import { Schema, model } from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { Order, OrderStatus } from './order';
 
 // 1. Create an interface representing a document in MongoDB.
 export interface ITicketDocument {
   _id: string;
+  version?: number;
   title: string;
   price: number;
   isReserved?(): Promise<boolean>;
@@ -15,6 +17,9 @@ const ticketSchema = new Schema<ITicketDocument>({
   title: { type: String, required: true },
   price: { type: Number, required: true, min: 0 },
 });
+
+ticketSchema.set('versionKey', 'version');
+ticketSchema.plugin(updateIfCurrentPlugin);
 
 ticketSchema.methods.isReserved = async function () {
   const existingOrder = await Order.findOne({

@@ -1,4 +1,5 @@
 import mongoose, { Schema, model, mongo } from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { ITicketDocument } from './ticket';
 import { OrderStatus } from '@dstavila-gittix/common';
 
@@ -7,6 +8,7 @@ export { OrderStatus };
 // 1. Create an interface representing a document in MongoDB.
 interface IOrderDocument {
   userId: string;
+  version?: number;
   status: OrderStatus;
   expiresAt: Date;
   ticket: ITicketDocument;
@@ -24,6 +26,9 @@ const orderSchema = new Schema<IOrderDocument>({
   expiresAt: { type: mongoose.Schema.Types.Date },
   ticket: { type: mongoose.Schema.Types.ObjectId, ref: 'Ticket' },
 });
+
+orderSchema.set('versionKey', 'version');
+orderSchema.plugin(updateIfCurrentPlugin);
 
 orderSchema.set('toJSON', {
   transform(doc: any, ret: any) {
