@@ -11,10 +11,11 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
   subject: Subjects.TicketUpdated = Subjects.TicketUpdated;
   queueGroupName = queueGroupName;
   async onMessage(data: TicketUpdatedEvent['data'], msg: Message) {
-    const { title, price, id } = data;
+    const { title, price, id, version } = data;
+    const previousVersion = version - 1;
     const ticket = await Ticket.findOne({
       _id: id,
-      version: data.version - 1,
+      version: previousVersion,
     });
 
     if (!ticket) {
