@@ -46,3 +46,10 @@ it('acks the message', async () => {
   await listener.onMessage(data, msg);
   expect(msg.ack).toHaveBeenCalled();
 });
+
+it('does not call ack if the event has skipped a version number', async () => {
+  const { msg, data, listener, ticket } = await setup();
+  data.version = 10;
+  expect(listener.onMessage(data, msg)).rejects.toThrow();
+  expect(msg.ack).not.toHaveBeenCalled();
+});
