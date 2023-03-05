@@ -7,6 +7,7 @@ interface ITicketDocument {
   userId: string;
   price: number;
   version?: number;
+  orderId?: string;
 }
 
 // 2. Create a Schema corresponding to the document interface.
@@ -14,6 +15,7 @@ const ticketSchema = new Schema<ITicketDocument>({
   title: { type: String, required: true },
   userId: { type: String, required: true },
   price: { type: Number, required: true },
+  orderId: { type: String, required: false },
 });
 
 ticketSchema.set('versionKey', 'version');
