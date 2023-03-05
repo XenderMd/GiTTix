@@ -16,7 +16,11 @@ it('returns an error if the ticket does not exist', async () => {
     .expect(404);
 });
 it('returns an error if the ticket is already reserved', async () => {
-  const ticket = new Ticket({ title: 'concert', price: 20 });
+  const ticket = new Ticket({
+    title: 'concert',
+    price: 20,
+    _id: new mongoose.Types.ObjectId(),
+  });
   await ticket.save();
 
   const order = new Order({
@@ -34,7 +38,11 @@ it('returns an error if the ticket is already reserved', async () => {
     .expect(400);
 });
 it('reserves a ticket', async () => {
-  const ticket = new Ticket({ title: 'concert', price: 20 });
+  const ticket = new Ticket({
+    title: 'concert',
+    price: 20,
+    _id: new mongoose.Types.ObjectId(),
+  });
   await ticket.save();
   await request(app)
     .post('/api/orders')
@@ -44,7 +52,11 @@ it('reserves a ticket', async () => {
 });
 
 it('emits and order created event', async () => {
-  const ticket = new Ticket({ title: 'concert', price: 20 });
+  const ticket = new Ticket({
+    title: 'concert',
+    price: 20,
+    _id: new mongoose.Types.ObjectId(),
+  });
   await ticket.save();
   await request(app)
     .post('/api/orders')
