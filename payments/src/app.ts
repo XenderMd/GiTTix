@@ -8,6 +8,7 @@ import {
   NotFoundError,
   currentUser,
 } from '@dstavila-gittix/common';
+import { createChargeRouter } from './routes/createCharge';
 
 const app = express();
 app.set('trust proxy', true);
@@ -20,6 +21,7 @@ app.use(
 );
 
 app.use(currentUser);
+app.use(createChargeRouter);
 
 app.all(
   '*',
